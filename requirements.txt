@@ -6,3 +6,4 @@ pandas-ta
 lightgbm
 numpy
 pandas
+scikit-learn
