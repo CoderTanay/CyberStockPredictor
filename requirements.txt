@@ -2,8 +2,8 @@ yfinance
 tensorflow
 plotly
 streamlit
-pandas-ta
+ta
 lightgbm
+scikit-learn
 numpy
 pandas
-scikit-learn
