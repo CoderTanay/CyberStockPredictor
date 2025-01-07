@@ -5,7 +5,7 @@ import tensorflow as tf
 from sklearn.preprocessing import MinMaxScaler
 import plotly.graph_objects as go
 import streamlit as st
-import pandas_ta as ta
+import ta  # Use ta instead of pandas_ta
 from datetime import datetime
 import os
 from sklearn.externals import joblib
@@ -88,9 +88,9 @@ if stock_symbol:
 
         # Add Technical Indicators
         if include_indicators:
-            data['RSI'] = ta.rsi(data['Close'], length=14)
-            data['EMA'] = ta.ema(data['Close'], length=20)
-            data['MACD'] = ta.macd(data['Close'])['MACD_12_26_9']
+            data['RSI'] = ta.momentum.rsi(data['Close'], window=14)
+            data['EMA'] = ta.trend.ema_indicator(data['Close'], window=20)
+            data['MACD'] = ta.trend.macd_diff(data['Close'])
             data.dropna(inplace=True)
 
         # Preprocess Data
@@ -167,8 +167,8 @@ if stock_symbol:
         st.plotly_chart(fig, use_container_width=True)
 
         # Show Predictions Table
-        st.write("### 📅 Predicted Prices")
-        st.dataframe(predictions_df.style.applymap(lambda x: "color: #00FF00"))
+        st.write(f"### 📅 Predicted Prices for the Next {timeframe}:")
+        st.write(predictions_df)
 
 else:
     st.write("Please enter a valid stock symbol.")
